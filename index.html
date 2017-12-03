@@ -11,17 +11,17 @@
 <body>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-2 locations-view">
+			<div class="col-xs-3 locations-view">
 				<h3 class="text-center">Favorites Places</h3>
 				<div>
           			<input id="filter-location-text" type="text" placeholder="Enter Location">
           			<input id="filter-location" type="button" value="Filter">
         		</div>
-				<div class="list-group" id="locations">
-					<a class="list-group-item location-item">text text text</a>
+				<div class="list-group" id="locations" data-bind="foreach: locationsList">
+					<a class="list-group-item location-item" data-bind="text: title, click: $parent.changeLocation"></a>
 				</div>
 			</div>
-			<div class="col-xs-10" id="map">
+			<div class="col-xs-9" id="map">
 			</div>
 		</div>
 	</div>

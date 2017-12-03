@@ -13,8 +13,9 @@ body {
 
 .locations-view{
     text-align: left;
-    height: 100vh;
     padding: 0px;
+    overflow: auto;
+    height: 100vh;
 }
 
 .location-item {
@@ -34,5 +35,6 @@ body {
 }
 
 #filter-location{
-	width: 25%;
+	width: 28%;
+	max-width: 100px;
 }
