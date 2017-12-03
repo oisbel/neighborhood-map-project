@@ -5,10 +5,26 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="author" content="Oisbel Simpson">
+	<link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<section id="map"></section>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-2 locations-view">
+				<h3 class="text-center">Favorites Places</h3>
+				<div>
+          			<input id="filter-location-text" type="text" placeholder="Enter Location">
+          			<input id="filter-location" type="button" value="Filter">
+        		</div>
+				<div class="list-group" id="locations">
+					<a class="list-group-item location-item">text text text</a>
+				</div>
+			</div>
+			<div class="col-xs-10" id="map">
+			</div>
+		</div>
+	</div>
 	<script src="js/libs/knockout-3.4.2.js"></script>
 	<script src="js/libs/jquery.min.js"></script>
     <script src="js/app.js"></script>

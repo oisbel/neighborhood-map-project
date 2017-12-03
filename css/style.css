@@ -6,11 +6,33 @@
 html,
 body {
     height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
 }
 
+.locations-view{
+    text-align: left;
+    height: 100vh;
+    padding: 0px;
+}
+
+.location-item {
+	background-color: transparent;
+	border: none;
+}
+
 #map {
     height: 100%;
-    width: 100%;
+    bottom:0px;
+    position: absolute;
+    right: 0px;
+}
+
+#filter-location-text{
+	width: 70%;
+}
+
+#filter-location{
+	width: 25%;
 }
