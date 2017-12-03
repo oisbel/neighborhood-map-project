@@ -110,7 +110,7 @@ function initMap(){
     // Center of the map
     var center = {lat: 30.1147939, lng: -95.2307214};
 
-    // Constructor creates a new map - only center and zoom are required.
+    // Create a map using Google Maps API.
     map = new google.maps.Map(document.getElementById('map'), {
     	center: center,
         zoom: 14,
@@ -143,7 +143,7 @@ function showMarkers(markers)
 
 /*ko*/
 
-// Locations displayed on the map
+// All the locations displayed on the map
 var locations = [
    	{title: 'First Baptist Porter', location: {lat: 30.1024607, lng: -95.2389851}},
    	{title: 'Captain D\'s', location: {lat: 30.1023553,lng: -95.2362218}},
@@ -160,13 +160,35 @@ var locations = [
    	{title: 'El Kiosko Frutas Y Helados', location: {lat: 30.1050485,lng: -95.2450048}}
 ];
 
+// represent a location item
+var place = function(data){
+	this.title = ko.observable(data.title);
+	this.location = ko.observable(data.location);
+	this.shown = ko.observable(true);
+}
+
 var ViewModel = function(){
 	self = this;
-	this.locationsList = ko.observableArray(locations);
+	this.locationsList = ko.observableArray([]);
+	locations.forEach(function(locationItem){
+		self.locationsList.push(new place(locationItem));
+	});
 
+	//store the text used for filter the list of locations
+	this.filterText = ko.observable();
+
+	this.filteredLocations = ko.computed(function(){
+		return self.locationsList().filter(function(location){
+			return location.shown();
+		});
+	});
+
+	// Handles click event on list item
 	this.changeLocation = function(location){
-		alert(location.title);
+
 	}
+
+
 }
 
 ko.applyBindings(new ViewModel());
