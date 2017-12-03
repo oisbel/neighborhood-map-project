@@ -126,19 +126,23 @@ function initMap(){
     	});
     	markers.push(marker);
     };
-    //Show markers
-    showMarkers(markers);
 
 }
 
 function showMarkers(markers)
 {
-	var bounds = new google.maps.LatLngBounds();
-	for (var i = 0; i < markers.length; i++) {
-		markers[i].setMap(map);
-		bounds.extend(markers[i].position);
+	if(!map || !markers){
+		//wait for the map to load and markers be created
+		setTimeout(function(){showMarkers(markers);},100);
 	}
-	map.fitBounds(bounds);
+	else{
+		var bounds = new google.maps.LatLngBounds();
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(map);
+			bounds.extend(markers[i].position);
+		}
+		map.fitBounds(bounds);
+	}
 }
 
 /*ko*/
@@ -188,7 +192,7 @@ var ViewModel = function(){
 
 	}
 
-
+	showMarkers(markers);
 }
 
 ko.applyBindings(new ViewModel());
