@@ -4,6 +4,7 @@ var map;
 // Create an array for all the locations markers
 var markers = [];
 
+// Load the map and the markers
 function initMap(){
 	// Create a styles array to use with the map( Attribution to snazzymaps.com )
     var styles = [{
@@ -108,11 +109,50 @@ function initMap(){
     // Center of the map
     var center = {lat: 30.1147939, lng: -95.2307214};
 
+    // Locations displayed on the map
+    var locations = [
+    	{title: 'First Baptist Porter', location: {lat: 30.1024607, lng: -95.2389851}},
+    	{title: 'Captain D\'s', location: {lat: 30.1023553,lng: -95.2362218}},
+    	{title: 'Academy Sports + Outdoors', location: {lat: 30.1331085,lng: -95.2320966}},
+    	{title: 'Texan Drive Stadium,', location: {lat: 30.1357423,lng: -95.2329521}},
+    	{title: 'Little Caesars Pizza', location: {lat: 30.1025538,lng: -95.2350824}},
+    	{title: 'Domino\'s Pizza', location: {lat: 30.1019643,lng: -95.2305003}},
+    	{title: 'Oakhurst Golf Club', location: {lat: 30.0862627,lng: -95.2598051}},
+    	{title: 'Porter High School', location: {lat: 30.1205102,lng: -95.2704333}},
+    	{title: 'New Caney High School', location: {lat: 30.132305,lng: -95.2214674}},
+    	{title: 'Burger King', location: {lat: 30.1049038,lng: -95.2383795}},
+    	{title: 'Mercadito La Mexicana', location: {lat: 30.1075306,lng: -95.2589777}},
+    	{title: 'Emerald Lake Resort', location: {lat: 30.1106145,lng: -95.2272312}},
+    	{title: 'El Kiosko Frutas Y Helados', location: {lat: 30.1050485,lng: -95.2450048}}
+    ];
+
     // Constructor creates a new map - only center and zoom are required.
     map = new google.maps.Map(document.getElementById('map'), {
     	center: center,
-        zoom: 13,
+        zoom: 14,
         styles: styles
     });
 
+    //Create the markers base on locations
+    for (var i = 0; i < locations.length; i++) {
+    	var marker = new google.maps.Marker({
+    		position: locations[i].location,
+    		title: locations[i].title,
+    		id: i
+    	});
+    	markers.push(marker);
+    };
+    //Show markers
+    showMarkers(markers);
+
+}
+
+function showMarkers(markers)
+{
+	var bounds = new google.maps.LatLngBounds();
+	for (var i = 0; i < markers.length; i++) {
+		markers[i].setMap(map);
+		bounds.extend(markers[i].position);
+	}
+	map.fitBounds(bounds);
 }
