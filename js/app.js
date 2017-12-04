@@ -152,7 +152,7 @@ var locations = [
    	{title: 'First Baptist Porter', location: {lat: 30.1024607, lng: -95.2389851}},
    	{title: 'Captain D\'s', location: {lat: 30.1023553,lng: -95.2362218}},
    	{title: 'Academy Sports + Outdoors', location: {lat: 30.1331085,lng: -95.2320966}},
-   	{title: 'Texan Drive Stadium,', location: {lat: 30.1357423,lng: -95.2329521}},
+   	{title: 'Texan Drive Stadium', location: {lat: 30.1357423,lng: -95.2329521}},
    	{title: 'Little Caesars Pizza', location: {lat: 30.1025538,lng: -95.2350824}},
    	{title: 'Domino\'s Pizza', location: {lat: 30.1019643,lng: -95.2305003}},
    	{title: 'Oakhurst Golf Club', location: {lat: 30.0862627,lng: -95.2598051}},
@@ -187,8 +187,21 @@ var ViewModel = function(){
 		});
 	});
 
+	//Handle click event on filter button
+	this.filter = function(){
+		//ko.utils.arrayForEach(self.locationsList(),function(locationItem){});
+		self.locationsList().forEach(function(locationItem){
+			if(locationItem.title().toLowerCase().includes(self.filterText().toLowerCase())){
+				locationItem.shown(true);
+			}
+			else{
+				locationItem.shown(false);
+			}
+		});
+	}
+
 	// Handles click event on list item
-	this.changeLocation = function(location){
+	this.highlightLocation = function(location){
 
 	}
 

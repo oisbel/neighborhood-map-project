@@ -14,11 +14,11 @@
 			<div class="col-xs-3 locations-view">
 				<h3 class="text-center">Favorites Places</h3>
 				<div>
-          			<input id="filter-location-text" data-bind="value: filterText" type="text" placeholder="Enter Location">
-          			<input id="filter-location" type="button" value="Filter">
+          			<input id="filter-location-text" type="text" placeholder="Enter Location" data-bind="value: filterText">
+          			<input id="filter-location" type="button" value="Filter" data-bind="click: filter">
         		</div>
 				<div class="list-group" id="locations" data-bind="foreach: filteredLocations">
-					<a class="list-group-item location-item" data-bind="text: title, click: $parent.changeLocation"></a>
+					<a class="list-group-item location-item" data-bind="text: title, click: $parent.highlightLocation"></a>
 				</div>
 			</div>
 			<div class="col-xs-9" id="map">
