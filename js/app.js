@@ -122,7 +122,8 @@ function initMap(){
     	var marker = new google.maps.Marker({
     		position: locations[i].location,
     		title: locations[i].title,
-    		id: i
+    		visible: true,
+    		id: locations[i].id
     	});
     	markers.push(marker);
     };
@@ -138,8 +139,12 @@ function showMarkers(markers)
 	else{
 		var bounds = new google.maps.LatLngBounds();
 		for (var i = 0; i < markers.length; i++) {
-			markers[i].setMap(map);
-			bounds.extend(markers[i].position);
+			if(markers[i].visible){
+				markers[i].setMap(map);
+				bounds.extend(markers[i].position);
+			}
+			else
+				markers[i].setMap(null);
 		}
 		map.fitBounds(bounds);
 	}
@@ -149,25 +154,26 @@ function showMarkers(markers)
 
 // All the locations displayed on the map
 var locations = [
-   	{title: 'First Baptist Porter', location: {lat: 30.1024607, lng: -95.2389851}},
-   	{title: 'Captain D\'s', location: {lat: 30.1023553,lng: -95.2362218}},
-   	{title: 'Academy Sports + Outdoors', location: {lat: 30.1331085,lng: -95.2320966}},
-   	{title: 'Texan Drive Stadium', location: {lat: 30.1357423,lng: -95.2329521}},
-   	{title: 'Little Caesars Pizza', location: {lat: 30.1025538,lng: -95.2350824}},
-   	{title: 'Domino\'s Pizza', location: {lat: 30.1019643,lng: -95.2305003}},
-   	{title: 'Oakhurst Golf Club', location: {lat: 30.0862627,lng: -95.2598051}},
-   	{title: 'Porter High School', location: {lat: 30.1205102,lng: -95.2704333}},
-   	{title: 'New Caney High School', location: {lat: 30.132305,lng: -95.2214674}},
-   	{title: 'Burger King', location: {lat: 30.1049038,lng: -95.2383795}},
-   	{title: 'Mercadito La Mexicana', location: {lat: 30.1075306,lng: -95.2589777}},
-   	{title: 'Emerald Lake Resort', location: {lat: 30.1106145,lng: -95.2272312}},
-   	{title: 'El Kiosko Frutas Y Helados', location: {lat: 30.1050485,lng: -95.2450048}}
+   	{title: 'First Baptist Porter', location: {lat: 30.1024607, lng: -95.2389851}, id: 0},
+   	{title: 'Captain D\'s', location: {lat: 30.1023553,lng: -95.2362218}, id: 1},
+   	{title: 'Academy Sports + Outdoors', location: {lat: 30.1331085,lng: -95.2320966}, id: 2},
+   	{title: 'Texan Drive Stadium', location: {lat: 30.1357423,lng: -95.2329521}, id: 3},
+   	{title: 'Little Caesars Pizza', location: {lat: 30.1025538,lng: -95.2350824}, id: 4},
+   	{title: 'Domino\'s Pizza', location: {lat: 30.1019643,lng: -95.2305003}, id: 5},
+   	{title: 'Oakhurst Golf Club', location: {lat: 30.0862627,lng: -95.2598051}, id: 6},
+   	{title: 'Porter High School', location: {lat: 30.1205102,lng: -95.2704333}, id: 7},
+   	{title: 'New Caney High School', location: {lat: 30.132305,lng: -95.2214674}, id: 8},
+   	{title: 'Burger King', location: {lat: 30.1049038,lng: -95.2383795}, id: 9},
+   	{title: 'Mercadito La Mexicana', location: {lat: 30.1075306,lng: -95.2589777}, id: 10},
+   	{title: 'Emerald Lake Resort', location: {lat: 30.1106145,lng: -95.2272312}, id: 11},
+   	{title: 'El Kiosko Frutas Y Helados', location: {lat: 30.1050485,lng: -95.2450048}, id: 12}
 ];
 
 // represent a location item
 var place = function(data){
 	this.title = ko.observable(data.title);
 	this.location = ko.observable(data.location);
+	this.id = data.id;
 	this.shown = ko.observable(true);
 }
 
@@ -189,15 +195,18 @@ var ViewModel = function(){
 
 	//Handle click event on filter button
 	this.filter = function(){
-		//ko.utils.arrayForEach(self.locationsList(),function(locationItem){});
 		self.locationsList().forEach(function(locationItem){
 			if(locationItem.title().toLowerCase().includes(self.filterText().toLowerCase())){
 				locationItem.shown(true);
+				markers[locationItem.id].visible = true;
 			}
 			else{
 				locationItem.shown(false);
+				markers[locationItem.id].visible = false;
 			}
 		});
+
+		showMarkers(markers);
 	}
 
 	// Handles click event on list item
