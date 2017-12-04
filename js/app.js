@@ -110,6 +110,10 @@ function initMap(){
     // Center of the map
     var center = {lat: 30.1147939, lng: -95.2307214};
 
+    var defaultIcon = 'img/default-icon.png';
+    //icon when mouse over
+    var icon = 'img/icon.png';
+
     // Create a map using Google Maps API.
     map = new google.maps.Map(document.getElementById('map'), {
     	center: center,
@@ -117,21 +121,30 @@ function initMap(){
         styles: styles
     });
 
+
     //Create the markers base on locations
     for (var i = 0; i < locations.length; i++) {
     	var marker = new google.maps.Marker({
     		position: locations[i].location,
     		title: locations[i].title,
     		visible: true,
+    		icon: defaultIcon,
     		id: locations[i].id
     	});
     	markers.push(marker);
+
+    	//Change the icon when mouse over
+    	marker.addListener('mouseover', function() {
+    		this.setIcon(icon);
+    	});
+    	marker.addListener('mouseout', function() {
+    		this.setIcon(defaultIcon);
+        });
     };
 
 }
 
-function showMarkers(markers)
-{
+function showMarkers(markers) {
 	if(!map || !markers){
 		//wait for the map to load and markers be created
 		setTimeout(function(){showMarkers(markers);},100);
