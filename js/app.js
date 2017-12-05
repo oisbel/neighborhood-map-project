@@ -165,7 +165,8 @@ function showMarkers(markers) {
 			else
 				markers[i].setMap(null);
 		}
-		map.fitBounds(bounds);
+		if(!bounds.equals(new google.maps.LatLngBounds()))
+			map.fitBounds(bounds);
 	}
 }
 
