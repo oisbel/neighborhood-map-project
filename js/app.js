@@ -142,7 +142,7 @@ function initMap(){
     	marker.addListener('mouseout', function() {
     		this.setIcon(defaultIcon);
         });
-    	//open an infowindow when click on the marker
+    	//open the infowindow when click on the marker
         marker.addListener('click', function(){
         	populateInfoWindow(this, infoWindow);
         });
@@ -177,6 +177,7 @@ function populateInfoWindow(marker, infowindow) {
 		return;
 
 	infowindow.setContent('<h5>'+marker.title+'</h5>'+
+		'<div id="foursquareData"></div>' +
 		'<ul class="list-unstyled" id="wikipedia-links"></ul>');
 	infowindow.marker = marker;
 	//clear the marker property when closing the infowindow.
@@ -186,6 +187,8 @@ function populateInfoWindow(marker, infowindow) {
     infowindow.open(map, marker);
 
     loadWikipedia(marker.title);
+
+    loadFoursquare(marker.position, marker.title);
 }
 
 //search for articles in wikipedia
@@ -196,13 +199,41 @@ function loadWikipedia(title){
 		url: 'http://en.wikipedia.org/w/api.php',
 		data: {action: 'opensearch', search: title, limit: '4', format: 'json'},
 		dataType: 'jsonp',
-		success: function( response){
+		success: function(response){
 			var articleList = response[1];
 			for (var i = 0; i < articleList.length; i++) {
 				var url = 'https://en.wikipedia.org/wiki/' + articleList[i];
                 $wikiElem.append('<li><a target="_blank" href="' + url + '">' +
                     articleList[i] +'</a></li>');
 			};
+		}
+	});
+}
+
+//get location details from foursquare
+function loadFoursquare(latlng, title){
+	var $foursquareElem = $('#foursquareData');
+
+	var client_id = 'HMVY14URZYXQ0VMDATLAFOYPTHX2H0PLDDUXSDLCWBT5V55K';
+	var client_secret = 'FVECJD3DALZWETVHP0VU1ZQJAOP2ELTNP0GCI31UZSCTRYVU';
+	$.ajax({
+		type: "GET",
+		url: 'https://api.foursquare.com/v2/venues/search',
+		data: {ll: latlng.lat() + ',' + latlng.lng(),
+			query: title, limit: '1',
+			venuePhotos: '1',
+			client_id: client_id, client_secret: client_secret,
+			v: '20170512'},
+		dataType: "jsonp",
+		success: function(response){
+			//get data from response
+			var item = response.response.venues[0];
+			var id = item.id;
+			var address = item.location.formattedAddress[0];
+			var phone = item.contact.formattedPhone;
+
+			$foursquareElem.append('<p>' + address + '</p>' +
+				(typeof phone != 'undefined'?('<p>' + phone + '</p>'):''));
 		}
 	});
 }
