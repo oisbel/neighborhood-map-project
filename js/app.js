@@ -231,9 +231,27 @@ function loadFoursquare(latlng, title){
 			var id = item.id;
 			var address = item.location.formattedAddress[0];
 			var phone = item.contact.formattedPhone;
+			var url = 'https://api.foursquare.com/v2/venues/' + id + '/photos?limit=1' +
+				'&client_id=' + client_id + '&client_secret=' + client_secret + '&v=20170512';
+			var srcImg = '';
 
-			$foursquareElem.append('<p>' + address + '</p>' +
-				(typeof phone != 'undefined'?('<p>' + phone + '</p>'):''));
+			//make another call to get the photo
+			$.getJSON( url, function( response){
+				if(response.response.photos.count > 0){
+					var prefix = response.response.photos.items[0].prefix;
+					var suffix = response.response.photos.items[0].suffix;
+					srcImg = prefix + "100x100" + suffix;
+				}
+				else
+					srcImg = 'img/noImg.png';
+
+				$foursquareElem.append('<p>' + address + '</p>' +
+				(typeof phone != 'undefined'?('<p>' + phone + '</p>'):'') +
+				'<img src="' + srcImg + '" >');
+
+			}).error(function(e){
+				console.log(e);
+			});
 		}
 	});
 }
