@@ -114,6 +114,8 @@ function initMap(){
     //icon when mouse over
     var icon = 'img/icon.png';
 
+    var infoWindow = new google.maps.InfoWindow();
+
     // Create a map using Google Maps API.
     map = new google.maps.Map(document.getElementById('map'), {
     	center: center,
@@ -140,6 +142,10 @@ function initMap(){
     	marker.addListener('mouseout', function() {
     		this.setIcon(defaultIcon);
         });
+    	//open an infowindow when click on the marker
+        marker.addListener('click', function(){
+        	populateInfoWindow(this, infoWindow);
+        });
     };
 
 }
@@ -161,6 +167,20 @@ function showMarkers(markers) {
 		}
 		map.fitBounds(bounds);
 	}
+}
+
+//Populates the infowindow when the marker is clicked
+function populateInfoWindow(marker, infowindow) {
+	//check if the infowindow is already opened on this marker
+	if (infowindow.marker == marker)
+		return;
+	infowindow.setContent('<div>'+marker.title+'</div>');
+	infowindow.marker = marker;
+	//clear the marker property when closing the infowindow.
+    infowindow.addListener('closeclick', function() {
+        infowindow.marker = null;
+    });
+    infowindow.open(map, marker);
 }
 
 /*ko*/
