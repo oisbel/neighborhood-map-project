@@ -175,13 +175,36 @@ function populateInfoWindow(marker, infowindow) {
 	//check if the infowindow is already opened on this marker
 	if (infowindow.marker == marker)
 		return;
-	infowindow.setContent('<div>'+marker.title+'</div>');
+
+	infowindow.setContent('<h5>'+marker.title+'</h5>'+
+		'<ul class="list-unstyled" id="wikipedia-links"></ul>');
 	infowindow.marker = marker;
 	//clear the marker property when closing the infowindow.
     infowindow.addListener('closeclick', function() {
         infowindow.marker = null;
     });
     infowindow.open(map, marker);
+
+    loadWikipedia(marker.title);
+}
+
+//search for articles in wikipedia
+function loadWikipedia(title){
+	var $wikiElem = $('#wikipedia-links');
+
+	$.ajax({
+		url: 'http://en.wikipedia.org/w/api.php',
+		data: {action: 'opensearch', search: title, limit: '4', format: 'json'},
+		dataType: 'jsonp',
+		success: function( response){
+			var articleList = response[1];
+			for (var i = 0; i < articleList.length; i++) {
+				var url = 'https://en.wikipedia.org/wiki/' + articleList[i];
+                $wikiElem.append('<li><a target="_blank" href="' + url + '">' +
+                    articleList[i] +'</a></li>');
+			};
+		}
+	});
 }
 
 /*ko*/
