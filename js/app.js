@@ -231,23 +231,34 @@ function loadFoursquare(latlng, title){
 			var id = item.id;
 			var address = item.location.formattedAddress[0];
 			var phone = item.contact.formattedPhone;
-			var url = 'https://api.foursquare.com/v2/venues/' + id + '/photos?limit=1' +
-				'&client_id=' + client_id + '&client_secret=' + client_secret + '&v=20170512';
+
 			var srcImg = '';
+			var rating = '';
+			var url = 'https://api.foursquare.com/v2/venues/' + id +
+				'?client_id=' + client_id + '&client_secret=' + client_secret + '&v=20170512';
 
-			//make another call to get the photo
+			//make another call to get photo and rating
 			$.getJSON( url, function( response){
-				if(response.response.photos.count > 0){
-					var prefix = response.response.photos.items[0].prefix;
-					var suffix = response.response.photos.items[0].suffix;
-					srcImg = prefix + "100x100" + suffix;
+				if(response.response.venue){
+					if(response.response.venue.bestPhoto){
+						var prefix = response.response.venue.bestPhoto.prefix;
+						var suffix = response.response.venue.bestPhoto.suffix;
+						srcImg = prefix + "100x100" + suffix;
+					}
+					else
+						srcImg = 'img/noImg.png';
+					if(response.response.venue.rating)
+						rating = response.response.venue.rating;
+					else
+						rating = '*';
 				}
-				else
+				else{
 					srcImg = 'img/noImg.png';
-
+					rating = '*';
+				}
 				$foursquareElem.append('<p>' + address + '</p>' +
 				(typeof phone != 'undefined'?('<p>' + phone + '</p>'):'') +
-				'<img src="' + srcImg + '" >');
+				'<img src="' + srcImg + '" ><p>rating:'+rating+'</p>');
 
 			}).error(function(e){
 				console.log(e);
