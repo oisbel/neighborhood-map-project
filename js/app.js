@@ -179,6 +179,11 @@ function populateInfoWindow(marker, infowindow) {
 	if (infowindow.marker == marker)
 		return;
 
+	marker.setAnimation(google.maps.Animation.BOUNCE)
+	setTimeout(function(){
+		marker.setAnimation(null);
+	},700);
+
 	infowindow.setContent('<h5>'+marker.title+'</h5>'+
 		'<div id="foursquareData"></div>' +
 		'<ul class="list-unstyled" id="wikipedia-links"></ul>');
@@ -187,6 +192,7 @@ function populateInfoWindow(marker, infowindow) {
     infowindow.addListener('closeclick', function() {
         infowindow.marker = null;
     });
+
     infowindow.open(map, marker);
 
     loadWikipedia(marker.title);
@@ -213,7 +219,7 @@ function loadWikipedia(title){
 	});
 }
 
-//get location details from foursquare to populates the infowindow
+//get location details from foursquare' API to populates the infowindow
 function loadFoursquare(latlng, title){
 	var $foursquareElem = $('#foursquareData');
 
