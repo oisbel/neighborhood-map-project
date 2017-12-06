@@ -11,16 +11,30 @@ body {
     padding: 0;
 }
 
-.locations-view{
+.locations-view {
     text-align: left;
     padding: 0px;
     overflow: auto;
     height: 100vh;
+    background: #000000;
+}
+
+.header-locations {
+	margin-top: 5px;
+    margin-bottom: 20px;
+    margin-left: 25px;
+    color: #a5a2a2;
 }
 
 .location-item {
 	background-color: transparent;
 	border: none;
+	color: #a5a2a2;
+}
+
+.location-item:hover {
+	background-color: #333333;
+	color: #e5c3c3;
 }
 
 #map {
@@ -31,5 +45,6 @@ body {
 }
 
 #filter-location-text{
-	width: 70%;
+	width: 60%;
+	margin-left: 5px;
 }
