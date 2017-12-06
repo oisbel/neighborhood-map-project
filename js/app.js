@@ -179,6 +179,7 @@ function populateInfoWindow(marker, infowindow) {
 	if (infowindow.marker == marker)
 		return;
 
+	//Animate the marker
 	marker.setAnimation(google.maps.Animation.BOUNCE)
 	setTimeout(function(){
 		marker.setAnimation(null);
@@ -225,6 +226,7 @@ function loadFoursquare(latlng, title){
 
 	var client_id = 'HMVY14URZYXQ0VMDATLAFOYPTHX2H0PLDDUXSDLCWBT5V55K';
 	var client_secret = 'FVECJD3DALZWETVHP0VU1ZQJAOP2ELTNP0GCI31UZSCTRYVU';
+	//Ther first call will be to get the id,address and phone
 	$.ajax({
 		type: "GET",
 		url: 'https://api.foursquare.com/v2/venues/search',
