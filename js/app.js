@@ -5,6 +5,8 @@ var map;
 // Create an array for all the locations markers
 var markers = [];
 
+var infoWindow = null;
+
 // Load the map and the markers
 function initMap(){
 	// Create a styles array to use with the map( Attribution to snazzymaps.com )
@@ -114,7 +116,7 @@ function initMap(){
     //icon when mouse over
     var icon = 'img/icon.png';
 
-    var infoWindow = new google.maps.InfoWindow();
+    infoWindow = new google.maps.InfoWindow();
 
     // Create a map using Google Maps API.
     map = new google.maps.Map(document.getElementById('map'), {
@@ -150,6 +152,7 @@ function initMap(){
 
 }
 
+//Shows the markers with the visible property set to true
 function showMarkers(markers) {
 	if(!map || !markers){
 		//wait for the map to load and markers be created
@@ -191,7 +194,7 @@ function populateInfoWindow(marker, infowindow) {
     loadFoursquare(marker.position, marker.title);
 }
 
-//search for articles in wikipedia
+//search for articles in wikipedia to populates the infowindow
 function loadWikipedia(title){
 	var $wikiElem = $('#wikipedia-links');
 
@@ -210,7 +213,7 @@ function loadWikipedia(title){
 	});
 }
 
-//get location details from foursquare
+//get location details from foursquare to populates the infowindow
 function loadFoursquare(latlng, title){
 	var $foursquareElem = $('#foursquareData');
 
@@ -237,7 +240,7 @@ function loadFoursquare(latlng, title){
 			var url = 'https://api.foursquare.com/v2/venues/' + id +
 				'?client_id=' + client_id + '&client_secret=' + client_secret + '&v=20170512';
 
-			//make another call to get photo and rating
+			//make another call to get photo and rating using the id
 			$.getJSON( url, function( response){
 				if(response.response.venue){
 					if(response.response.venue.bestPhoto){
@@ -304,6 +307,7 @@ var ViewModel = function(){
 	//store the text used for filter the list of locations
 	this.filterText = ko.observable();
 
+	//list of locations
 	this.filteredLocations = ko.computed(function(){
 		return self.locationsList().filter(function(location){
 			return location.shown();
@@ -313,6 +317,7 @@ var ViewModel = function(){
 	//Handle click event on filter button
 	this.filter = function(){
 		self.locationsList().forEach(function(locationItem){
+			//check if the title contains the text entered
 			if(locationItem.title().toLowerCase().includes(self.filterText().toLowerCase())){
 				locationItem.shown(true);
 				markers[locationItem.id].visible = true;
@@ -328,7 +333,7 @@ var ViewModel = function(){
 
 	// Handles click event on list item
 	this.highlightLocation = function(location){
-
+		populateInfoWindow(markers[location.id], infoWindow);
 	}
 
 	showMarkers(markers);
