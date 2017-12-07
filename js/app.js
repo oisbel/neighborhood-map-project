@@ -269,7 +269,7 @@ function loadFoursquare(latlng, title){
 				}
 				$foursquareElem.append('<p>' + address + '</p>' +
 				(typeof phone != 'undefined'?('<p>' + phone + '</p>'):'') +
-				'<img src="' + srcImg + '" ><p>rating:'+rating+'</p>');
+				'<img src="' + srcImg + '" ><p>rating:<span class="badge">'+rating+'</span></p>');
 
 			}).error(function(e){
 				console.log(e);

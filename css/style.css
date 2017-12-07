@@ -20,7 +20,7 @@ body {
 }
 
 .header-locations {
-	margin-top: 5px;
+	margin-top: 10px;
     margin-bottom: 20px;
     margin-left: 25px;
     color: #a5a2a2;
@@ -37,11 +37,24 @@ body {
 	color: #e5c3c3;
 }
 
+.hamburger-bar {
+	background: #1c262f;
+	padding: 0px;
+	height: 7vh;
+}
+
+.map-container {
+	padding: 0px;
+	height: 93vh;
+}
+
 #map {
     height: 100%;
-    bottom:0px;
+    width: 100%;
+    bottom: 0px;
     position: absolute;
     right: 0px;
+    top: 7vh;
 }
 
 #filter-location-text{
