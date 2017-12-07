@@ -5,6 +5,7 @@ var map;
 // Create an array for all the locations markers
 var markers = [];
 
+// InfoWindow to show when a marker is selected
 var infoWindow = null;
 
 // Load the map and the markers
@@ -113,7 +114,7 @@ function initMap(){
     var center = {lat: 30.1147939, lng: -95.2307214};
 
     var defaultIcon = 'img/default-icon.png';
-    //icon when mouse over
+    // Icon when mouse over
     var icon = 'img/icon.png';
 
     infoWindow = new google.maps.InfoWindow();
@@ -126,7 +127,7 @@ function initMap(){
     });
 
 
-    //Create the markers base on locations
+    // Create the markers base on locations
     for (var i = 0; i < locations.length; i++) {
     	var marker = new google.maps.Marker({
     		position: locations[i].location,
@@ -137,14 +138,14 @@ function initMap(){
     	});
     	markers.push(marker);
 
-    	//Change the icon when mouse over
+    	// Change the icon when mouse over
     	marker.addListener('mouseover', function() {
     		this.setIcon(icon);
     	});
     	marker.addListener('mouseout', function() {
     		this.setIcon(defaultIcon);
         });
-    	//open the infowindow when click on the marker
+    	// Open the infowindow when click on the marker
         marker.addListener('click', function(){
         	populateInfoWindow(this, infoWindow);
         });
@@ -152,10 +153,10 @@ function initMap(){
 
 }
 
-//Shows the markers with the visible property set to true
+// Shows the markers with the visible property set to true
 function showMarkers(markers) {
 	if(!map || !markers){
-		//wait for the map to load and markers be created
+		// Wait for the map to load and markers be created
 		setTimeout(function(){showMarkers(markers);},100);
 	}
 	else{
@@ -173,13 +174,13 @@ function showMarkers(markers) {
 	}
 }
 
-//Populates the infowindow when the marker is clicked
+// Populates the infowindow when the marker is clicked
 function populateInfoWindow(marker, infowindow) {
 	//check if the infowindow is already opened on this marker
 	if (infowindow.marker == marker)
 		return;
 
-	//Animate the marker
+	// Animate the marker
 	marker.setAnimation(google.maps.Animation.BOUNCE)
 	setTimeout(function(){
 		marker.setAnimation(null);
@@ -189,7 +190,7 @@ function populateInfoWindow(marker, infowindow) {
 		'<div id="foursquareData"></div>' +
 		'<ul class="list-unstyled" id="wikipedia-links"></ul>');
 	infowindow.marker = marker;
-	//clear the marker property when closing the infowindow.
+	// Clear the marker property when closing the infowindow.
     infowindow.addListener('closeclick', function() {
         infowindow.marker = null;
     });
@@ -201,7 +202,7 @@ function populateInfoWindow(marker, infowindow) {
     loadFoursquare(marker.position, marker.title);
 }
 
-//search for articles in wikipedia to populates the infowindow
+// Search for articles in wikipedia to populates the infowindow
 function loadWikipedia(title){
 	var $wikiElem = $('#wikipedia-links');
 
@@ -220,13 +221,13 @@ function loadWikipedia(title){
 	});
 }
 
-//get location details from foursquare' API to populates the infowindow
+// Get location details from foursquare' API to populates the infowindow
 function loadFoursquare(latlng, title){
 	var $foursquareElem = $('#foursquareData');
 
 	var client_id = 'HMVY14URZYXQ0VMDATLAFOYPTHX2H0PLDDUXSDLCWBT5V55K';
 	var client_secret = 'FVECJD3DALZWETVHP0VU1ZQJAOP2ELTNP0GCI31UZSCTRYVU';
-	//Ther first call will be to get the id,address and phone
+	// Ther first call will be to get the id,address and phone
 	$.ajax({
 		type: "GET",
 		url: 'https://api.foursquare.com/v2/venues/search',
@@ -237,7 +238,7 @@ function loadFoursquare(latlng, title){
 			v: '20170512'},
 		dataType: "jsonp",
 		success: function(response){
-			//get data from response
+			// Get data from response
 			var item = response.response.venues[0];
 			var id = item.id;
 			var address = item.location.formattedAddress[0];
@@ -248,7 +249,7 @@ function loadFoursquare(latlng, title){
 			var url = 'https://api.foursquare.com/v2/venues/' + id +
 				'?client_id=' + client_id + '&client_secret=' + client_secret + '&v=20170512';
 
-			//make another call to get photo and rating using the id
+			// Make another call to get photo and rating using the id
 			$.getJSON( url, function( response){
 				if(response.response.venue){
 					if(response.response.venue.bestPhoto){
@@ -297,7 +298,7 @@ var locations = [
    	{title: 'El Kiosko Frutas Y Helados', location: {lat: 30.1050485,lng: -95.2450048}, id: 12}
 ];
 
-// represent a location item
+// Represent a location item
 var place = function(data){
 	this.title = ko.observable(data.title);
 	this.location = ko.observable(data.location);
@@ -312,7 +313,7 @@ var ViewModel = function(){
 		self.locationsList.push(new place(locationItem));
 	});
 
-	//store the text used for filter the list of locations
+	// Store the text used for filter the list of locations
 	this.filterText = ko.observable();
 
 	//list of locations
@@ -322,10 +323,10 @@ var ViewModel = function(){
 		});
 	});
 
-	//Handle click event on filter button
+	// Handle click event on filter button
 	this.filter = function(){
 		self.locationsList().forEach(function(locationItem){
-			//check if the title contains the text entered
+			// Check if the title contains the text entered
 			if(locationItem.title().toLowerCase().includes(self.filterText().toLowerCase())){
 				locationItem.shown(true);
 				markers[locationItem.id].visible = true;
