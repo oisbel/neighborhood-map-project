@@ -37,6 +37,11 @@ body {
 	color: #e5c3c3;
 }
 
+.hamburger-link {
+    margin: 10px;
+    margin-left: 20px;
+}
+
 .hamburger-bar {
 	background: #1c262f;
 	padding: 0px;
@@ -46,6 +51,16 @@ body {
 .map-container {
 	padding: 0px;
 	height: 93vh;
+}
+
+/*To take the entire width when listview is hidden*/
+.map-container-max {
+    width: 100%;
+}
+
+/*To hide the listview*/
+.locations-view-hide {
+    width: 0px;
 }
 
 #map {

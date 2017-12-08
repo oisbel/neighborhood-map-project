@@ -308,7 +308,13 @@ var place = function(data){
 
 var ViewModel = function(){
 	self = this;
+
+    // Indicates when the list view is hidden
+    this.isHide = ko.observable(false);
+
+    //list of all locations
 	this.locationsList = ko.observableArray([]);
+
 	locations.forEach(function(locationItem){
 		self.locationsList.push(new place(locationItem));
 	});
@@ -316,7 +322,7 @@ var ViewModel = function(){
 	// Store the text used for filter the list of locations
 	this.filterText = ko.observable();
 
-	//list of locations
+	//list of locations to show
 	this.filteredLocations = ko.computed(function(){
 		return self.locationsList().filter(function(location){
 			return location.shown();
@@ -344,6 +350,11 @@ var ViewModel = function(){
 	this.highlightLocation = function(location){
 		populateInfoWindow(markers[location.id], infoWindow);
 	}
+
+    //To hide and show the listview
+    this.hideList = function(){
+        self.isHide(!self.isHide());
+    }
 
 	showMarkers(markers);
 }

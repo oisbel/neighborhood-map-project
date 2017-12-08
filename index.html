@@ -11,7 +11,7 @@
 <body>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-3 locations-view">
+			<div class="col-xs-3 locations-view" data-bind="css: {'locations-view-hide': isHide()}">
 				<div>
 					<h3 class="header-locations">Favorites Places</h3>
           			<input id="filter-location-text" type="text" placeholder="Enter Location"
@@ -21,10 +21,10 @@
 					<li class="list-group-item location-item" data-bind="text: title, click: $parent.highlightLocation"></li>
 				</ul>
 			</div>
-			<div class="col-xs-9 map-container">
+			<div class="col-xs-9 map-container" data-bind="css: {'map-container-max': isHide()}">
 				<div class="hamburger-bar">
-					<a href="#">
-          				<span class="glyphicon glyphicon-align-justify"></span>
+					<a href="#" title="Hide List" data-bind="click: hideList">
+          				<span class="glyphicon glyphicon-align-justify hamburger-link"></span>
         			</a>
 				</div>
 				<div id="map"></div>
