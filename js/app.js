@@ -186,9 +186,12 @@ function populateInfoWindow(marker, infowindow) {
 		marker.setAnimation(null);
 	},700);
 
-	infowindow.setContent('<h5>'+marker.title+'</h5>'+
+	infowindow.setContent('<div class="iw-container">'+
+        '<div class="iw-title">' + marker.title + '</div>'+
+        '<div class="info-container">' +
 		'<div id="foursquareData"></div>' +
-		'<ul class="list-unstyled" id="wikipedia-links"></ul>');
+		'<ul class="list-unstyled" id="wikipedia-links"></ul>' +
+        '</div></div>');
 	infowindow.marker = marker;
 	// Clear the marker property when closing the infowindow.
     infowindow.addListener('closeclick', function() {
@@ -269,8 +272,11 @@ function loadFoursquare(latlng, title){
 					rating = '*';
 				}
 				$foursquareElem.append('<p>' + address + '</p>' +
-				(typeof phone != 'undefined'?('<p>' + phone + '</p>'):'') +
-				'<img src="' + srcImg + '" ><p>rating:<span class="badge">'+rating+'</span></p>');
+                    '<div class="row"><div class="col-xs-6"><img src="' + srcImg + '" ></div>' +
+                    '<div class="col-xs-6">' +
+				    (typeof phone != 'undefined'?('<p>' + phone + '</p>'):'') +
+				    '<p>rating:<span class="badge">'+rating+'</span></p>') +
+                    '</div></div>';
 
 			}).error(function(e){
 				console.log(e);

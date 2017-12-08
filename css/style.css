@@ -76,3 +76,32 @@ body {
 	width: 60%;
 	margin-left: 5px;
 }
+
+/*InfoWindow*/
+
+.iw-container {
+    overflow: hidden;
+}
+
+.info-container{
+    margin: 10px;
+}
+
+.iw-title {
+    max-width: 250px;
+}
+
+.iw-container  .iw-title {
+   font-size: 18px;
+   padding: 10px;
+   background-color: #5e8792;
+   color: white;
+   border-radius: 2px 2px 0 0;
+}
+
+/* The element that wraps the infowindow has the class .gm-style-iw*/
+.gm-style-iw {
+    top: 0 !important;
+    left: 0 !important;
+    border-radius: 2px 2px 10px 10px;
+}
