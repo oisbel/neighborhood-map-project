@@ -11,7 +11,7 @@
 <body>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-3 locations-view" data-bind="css: {'locations-view-hide': isHide()}">
+			<div class="col-xs-5 col-sm-4 col-md-3 col-lg-2 locations-view" data-bind="css: {'locations-view-hide': isHide()}">
 				<div>
 					<h3 class="header-locations">Favorites Places</h3>
           			<input id="filter-location-text" type="text" placeholder="Enter Location"
@@ -21,7 +21,7 @@
 					<li class="list-group-item location-item" data-bind="text: title, click: $parent.highlightLocation"></li>
 				</ul>
 			</div>
-			<div class="col-xs-9 map-container" data-bind="css: {'map-container-max': isHide()}">
+			<div class="col-xs-7 col-sm-8 col-md-9 col-lg-10 map-container" data-bind="css: {'map-container-max': isHide()}">
 				<div class="hamburger-bar">
 					<a data-bind="click: hideshowList, attr:{title: hamburgerText}">
           				<span class="glyphicon glyphicon-align-justify hamburger-link"></span>

@@ -40,6 +40,7 @@ body {
 .hamburger-link {
     margin: 10px;
     margin-left: 20px;
+    font-size: 20px;
 }
 
 .hamburger-bar {
@@ -104,4 +105,50 @@ body {
     top: 0 !important;
     left: 0 !important;
     border-radius: 2px 2px 10px 10px;
+}
+
+/*ipad screens*/
+@media screen and (max-width: 800px) {
+
+    .header-locations {
+        margin-bottom: 15px;
+        margin-left: 15px;
+        font-size: 26px;
+    }
+
+    #filter-location-text {
+        width: 80%;
+        font-size: 16px;
+    }
+
+    .location-item {
+        font-size: 16px;
+    }
+
+    .hamburger-link {
+        margin: 10px;
+        font-size: 20px;
+    }
+}
+
+/*Small screens*/
+@media screen and (max-width: 500px) {
+
+    .header-locations {
+        font-size: 24px;
+    }
+
+    #filter-location-text {
+        font-size: 14px;
+    }
+
+    .location-item {
+        font-size: 14px;
+    }
+
+    .hamburger-link {
+        margin: 10px;
+        margin-left: 15px;
+        font-size: 18px;
+    }
 }
