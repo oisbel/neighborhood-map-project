@@ -73,6 +73,11 @@ body {
 	margin-left: 5px;
 }
 
+#filter-location-text:focus {
+    border-color: #757c87;
+    margin-left: 4px;
+}
+
 /*InfoWindow*/
 
 .iw-container {

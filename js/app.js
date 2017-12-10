@@ -126,6 +126,11 @@ function initMap(){
         styles: styles
     });
 
+    // Listen for the map-container resize event & trigger Google Maps to update too,
+    // so the map take all the space
+    $('.map-container').bind('resize', function() {
+        google.maps.event.trigger(map, "resize");
+    });
 
     // Create the markers base on locations
     for (var i = 0; i < locations.length; i++) {
@@ -280,8 +285,9 @@ function loadFoursquare(latlng, title){
 				    '<p>rating:<span class="badge">'+rating+'</span></p>') +
                     '</div></div>';
 
-			}).error(function(e){
+			}).fail(function(e){
 				console.log(e);
+                alert("There was an error. Please refresh the page and try again.");
 			});
 		}
 	});
@@ -368,6 +374,7 @@ var ViewModel = function(){
     this.hideshowList = function(){
         self.isHide(!self.isHide());
         $('#locations-view').toggle();
+        $('.map-container').resize();
     }
 
 	showMarkers(markers);
