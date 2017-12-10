@@ -59,11 +59,6 @@ body {
     width: 100%;
 }
 
-/*To hide the listview*/
-.locations-view-hide {
-    width: 0px;
-}
-
 #map {
     height: 100%;
     width: 100%;
