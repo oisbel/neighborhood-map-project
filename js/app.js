@@ -198,6 +198,8 @@ function populateInfoWindow(marker, infowindow) {
         infowindow.marker = null;
     });
 
+    // map.setCenter(marker.position);
+
     infowindow.open(map, marker);
 
     loadWikipedia(marker.title);
@@ -335,7 +337,12 @@ var ViewModel = function(){
 		});
 	});
 
-	// Handle click event on filter button
+    // Title of the hamburger's icon
+    this.hamburgerText = ko.computed(function(){
+        return self.isHide()?"Show List" : "Hide List";
+    });
+
+	// Handle key up event on filter text
 	this.filter = function(){
 		self.locationsList().forEach(function(locationItem){
 			// Check if the title contains the text entered
@@ -358,7 +365,7 @@ var ViewModel = function(){
 	}
 
     //To hide and show the listview
-    this.hideList = function(){
+    this.hideshowList = function(){
         self.isHide(!self.isHide());
     }
 
