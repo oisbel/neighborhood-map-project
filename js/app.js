@@ -230,6 +230,7 @@ function loadWikipedia(title){
 		},
         error: function(){
             console.log("Fail to load wikipedia articles");
+            alert("Fail to load wikipedia articles");
         }
 	});
 }
