@@ -9,8 +9,8 @@ var markers = [];
 var infoWindow = null;
 
 // Load the map and the markers
-function initMap(){
-	// Create a styles array to use with the map( Attribution to snazzymaps.com )
+function initMap() {
+    // Create a styles array to use with the map(Attribution to snazzymaps.com)
     var styles = [{
     "elementType": "geometry",
     "stylers": [{

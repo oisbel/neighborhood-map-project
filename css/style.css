@@ -13,28 +13,28 @@ body {
 
 .locations-view {
     text-align: left;
-    padding: 0px;
+    padding: 0;
     overflow: auto;
     height: 100vh;
     background: #000000;
 }
 
 .header-locations {
-	margin-top: 10px;
+    margin-top: 10px;
     margin-bottom: 20px;
     margin-left: 25px;
     color: #a5a2a2;
 }
 
 .location-item {
-	background-color: transparent;
-	border: none;
-	color: #a5a2a2;
+    background-color: transparent;
+    border: none;
+    color: #a5a2a2;
 }
 
 .location-item:hover {
-	background-color: #333333;
-	color: #e5c3c3;
+    background-color: #333333;
+    color: #e5c3c3;
 }
 
 .hamburger-link {
@@ -44,14 +44,14 @@ body {
 }
 
 .hamburger-bar {
-	background: #1c262f;
-	padding: 0px;
-	height: 7vh;
+    background: #1c262f;
+    padding: 0;
+    height: 7vh;
 }
 
 .map-container {
-	padding: 0px;
-	height: 93vh;
+    padding: 0;
+    height: 93vh;
 }
 
 /*To take the entire width when listview is hidden*/
@@ -62,15 +62,15 @@ body {
 #map {
     height: 100%;
     width: 100%;
-    bottom: 0px;
+    bottom: 0;
     position: absolute;
-    right: 0px;
+    right: 0;
     top: 7vh;
 }
 
 #filter-location-text{
-	width: 60%;
-	margin-left: 5px;
+    width: 60%;
+    margin-left: 5px;
 }
 
 #filter-location-text:focus {
