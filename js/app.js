@@ -1,4 +1,4 @@
-/*map and markers*/
+/* Init map and markers*/
 
 var map;
 
@@ -117,6 +117,7 @@ function initMap(){
     // Icon when mouse over
     var icon = 'img/icon.png';
 
+    // To show info when markers are selected
     infoWindow = new google.maps.InfoWindow();
 
     // Create a map using Google Maps API.
@@ -150,6 +151,7 @@ function initMap(){
     	marker.addListener('mouseout', function() {
     		this.setIcon(defaultIcon);
         });
+
     	// Open the infowindow when click on the marker
         marker.addListener('click', function(){
         	populateInfoWindow(this, infoWindow);
@@ -203,8 +205,6 @@ function populateInfoWindow(marker, infowindow) {
         infowindow.marker = null;
     });
 
-    // map.setCenter(marker.position);
-
     infowindow.open(map, marker);
 
     loadWikipedia(marker.title);
@@ -237,7 +237,8 @@ function loadFoursquare(latlng, title){
 
 	var client_id = 'HMVY14URZYXQ0VMDATLAFOYPTHX2H0PLDDUXSDLCWBT5V55K';
 	var client_secret = 'FVECJD3DALZWETVHP0VU1ZQJAOP2ELTNP0GCI31UZSCTRYVU';
-	// Ther first call will be to get the id,address and phone
+
+	// This first call will be to get the id,address and phone
 	$.ajax({
 		type: "GET",
 		url: 'https://api.foursquare.com/v2/venues/search',
@@ -320,15 +321,15 @@ var place = function(data){
 	this.shown = ko.observable(true);
 }
 
+// The viewmodel
 var ViewModel = function(){
 	self = this;
 
     // Indicates when the list view is hidden
     this.isHide = ko.observable(false);
 
-    //list of all locations
+    // List of objects place
 	this.locationsList = ko.observableArray([]);
-
 	locations.forEach(function(locationItem){
 		self.locationsList.push(new place(locationItem));
 	});
