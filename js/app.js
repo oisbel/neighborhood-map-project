@@ -227,7 +227,10 @@ function loadWikipedia(title){
                 $wikiElem.append('<li><a target="_blank" href="' + url + '">' +
                     articleList[i] +'</a></li>');
 			};
-		}
+		},
+        error: function(){
+            console.log("Fail to load wikipedia articles");
+        }
 	});
 }
 
@@ -286,11 +289,15 @@ function loadFoursquare(latlng, title){
 				    '<p>rating:<span class="badge">'+rating+'</span></p>') +
                     '</div></div>';
 
-			}).fail(function(e){
-				console.log(e);
+			}).fail(function(){
+				console.log("Fail to load foursquare details");
                 alert("There was an error. Please refresh the page and try again.");
 			});
-		}
+		},
+        error: function(){
+            console.log("Fail to load foursquare id");
+            alert("There was an error. Please refresh the page and try again.");
+        }
 	});
 }
 
