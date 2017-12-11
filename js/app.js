@@ -373,7 +373,7 @@ var ViewModel = function(){
     //To hide and show the listview
     this.hideshowList = function(){
         self.isHide(!self.isHide());
-        $('#locations-view').toggle();
+        $('.locations-view').toggle();
         $('.map-container').resize();
     }
 
