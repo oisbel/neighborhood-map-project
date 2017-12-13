@@ -380,8 +380,7 @@ var ViewModel = function(){
     //To hide and show the listview
     this.hideshowList = function(){
         self.isHide(!self.isHide());
-        $('.locations-view').toggle();
-        $('.map-container').resize();
+        $('.map-container').resize();// To make the map refresh all the width
     }
 
 	showMarkers(markers);

@@ -19,6 +19,20 @@ body {
     background: #000000;
 }
 
+/*To hide the listview*/
+.locations-view-out {
+    visibility: hidden;
+    width: 0;
+    opacity: 0;
+    transition: visibility 0s linear 300ms, opacity 300ms;
+}
+
+.locations-view-in {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s linear 0s, opacity 300ms;
+}
+
 .header-locations {
     margin-top: 10px;
     margin-bottom: 20px;
