@@ -16,6 +16,13 @@ The web page is fully responsive, it resizes using Bootstrap and media queries.
 Google Maps API is used here to show the map and generate the markers and the infoWindow when markers are selected.
 Foursquare API is used to pull more information on locations. This includes one photo where available, address, phone number, and rating. Also, we get relates articles from Wikipedia.
 
+### Resources Used
+- StackOverflow
+- Knockout JS Documentation
+- Google Maps API Documentation
+- Udacity The Frontend: JavaScript & AJAX Course
+
+
 License
 ----
 
