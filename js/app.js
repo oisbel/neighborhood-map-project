@@ -195,50 +195,20 @@ function populateInfoWindow(marker, infowindow) {
 
 	infowindow.setContent('<div class="iw-container">'+
         '<div class="iw-title">' + marker.title + '</div>'+
-        '<div class="info-container">' +
-		'<div id="foursquareData"></div>' +
-		'<ul class="list-unstyled" id="wikipedia-links"></ul>' +
-        '</div></div>');
+        '<div class="info-container">');
 	infowindow.marker = marker;
 	// Clear the marker property when closing the infowindow.
     infowindow.addListener('closeclick', function() {
         infowindow.marker = null;
     });
 
+    loadFoursquare_Wikipedia(marker.position, marker.title, infowindow);
+
     infowindow.open(map, marker);
-
-    loadWikipedia(marker.title);
-
-    loadFoursquare(marker.position, marker.title);
 }
 
-// Search for articles in wikipedia to populates the infowindow
-function loadWikipedia(title){
-	var $wikiElem = $('#wikipedia-links');
-
-	$.ajax({
-		url: 'http://en.wikipedia.org/w/api.php',
-		data: {action: 'opensearch', search: title, limit: '4', format: 'json'},
-		dataType: 'jsonp',
-		success: function(response){
-			var articleList = response[1];
-			for (var i = 0; i < articleList.length; i++) {
-				var url = 'https://en.wikipedia.org/wiki/' + articleList[i];
-                $wikiElem.append('<li><a target="_blank" href="' + url + '">' +
-                    articleList[i] +'</a></li>');
-			};
-		},
-        error: function(){
-            console.log("Fail to load wikipedia articles");
-            alert("Fail to load wikipedia articles");
-        }
-	});
-}
-
-// Get location details from foursquare' API to populates the infowindow
-function loadFoursquare(latlng, title){
-	var $foursquareElem = $('#foursquareData');
-
+// Get location details from foursquare' API and wikipedia to populates the infowindow
+function loadFoursquare_Wikipedia(latlng, title, infowindow){
 	var client_id = 'HMVY14URZYXQ0VMDATLAFOYPTHX2H0PLDDUXSDLCWBT5V55K';
 	var client_secret = 'FVECJD3DALZWETVHP0VU1ZQJAOP2ELTNP0GCI31UZSCTRYVU';
 
@@ -283,12 +253,15 @@ function loadFoursquare(latlng, title){
 					srcImg = 'img/noImg.png';
 					rating = '*';
 				}
-				$foursquareElem.append('<p>' + address + '</p>' +
+                var newContent = '<div><p>' + address + '</p>' +
                     '<div class="row"><div class="col-xs-6"><img src="' + srcImg + '" ></div>' +
                     '<div class="col-xs-6">' +
-				    (typeof phone != 'undefined'?('<p>' + phone + '</p>'):'') +
-				    '<p>rating:<span class="badge">'+rating+'</span></p>') +
-                    '</div></div>';
+                    (typeof phone != 'undefined'?('<p>' + phone + '</p>'):'') +
+                    '<p>rating:<span class="badge">'+rating+'</span></p></div></div></div>';
+
+                infowindow.setContent(infowindow.getContent() + newContent);
+
+                loadWikipedia(title, infowindow);
 
 			}).fail(function(){
 				console.log("Fail to load foursquare details");
@@ -300,6 +273,31 @@ function loadFoursquare(latlng, title){
             alert("There was an error. Please refresh the page and try again.");
         }
 	});
+}
+
+// Search for articles in wikipedia to populates the infowindow
+function loadWikipedia(title, infowindow){
+    var newContent = '<ul class="list-unstyled">';
+
+    $.ajax({
+        url: 'http://en.wikipedia.org/w/api.php',
+        data: {action: 'opensearch', search: title, limit: '4', format: 'json'},
+        dataType: 'jsonp',
+        success: function(response){
+            var articleList = response[1];
+            for (var i = 0; i < articleList.length; i++) {
+                var url = 'https://en.wikipedia.org/wiki/' + articleList[i];
+                newContent += '<li><a target="_blank" href="' + url + '">' +
+                    articleList[i] +'</a></li>';
+            };
+            newContent += '</ul></div></div>';
+            infowindow.setContent(infowindow.getContent() + newContent);
+        },
+        error: function(){
+            console.log("Fail to load wikipedia articles");
+            alert("Fail to load wikipedia articles");
+        }
+    });
 }
 
 /*ko*/
