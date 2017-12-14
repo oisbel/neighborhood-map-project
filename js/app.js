@@ -304,6 +304,9 @@ function loadWikipedia(title, infowindow){
     }).fail(function( xhr, status, errorThrown ){
         alert("Fail to load wikipedia articles");
         console.log("Fail to load wikipedia articles");
+        console.log( "Error: " + errorThrown );
+        console.log( "Status: " + status );
+        console.dir( xhr );
     });
 }
 
