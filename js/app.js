@@ -230,58 +230,59 @@ function loadFoursquare_Wikipedia(latlng, title, infowindow){
 			venuePhotos: '1',
 			client_id: client_id, client_secret: client_secret,
 			v: '20170512'},
-		dataType: "jsonp",
-		success: function(response){
-			// Get data from response
-			var item = response.response.venues[0];
-			var id = item.id;
-			var address = item.location.formattedAddress[0];
-			var phone = item.contact.formattedPhone;
+		dataType: "jsonp"
+	}).done(function(response){
+        // Get data from response
+        var item = response.response.venues[0];
+        var id = item.id;
+        var address = item.location.formattedAddress[0];
+        var phone = item.contact.formattedPhone;
 
-			var srcImg = '';
-			var rating = '';
-			var url = 'https://api.foursquare.com/v2/venues/' + id +
-				'?client_id=' + client_id + '&client_secret=' + client_secret + '&v=20170512';
+        var srcImg = '';
+        var rating = '';
+        var url = 'https://api.foursquare.com/v2/venues/' + id +
+        '?client_id=' + client_id + '&client_secret=' + client_secret + '&v=20170512';
 
-			// Make another call to get photo and rating using the id
-			$.getJSON( url, function( response){
-				if(response.response.venue){
-					if(response.response.venue.bestPhoto){
-						var prefix = response.response.venue.bestPhoto.prefix;
-						var suffix = response.response.venue.bestPhoto.suffix;
-						srcImg = prefix + "100x100" + suffix;
-					}
-					else
-						srcImg = 'img/noImg.png';
-					if(response.response.venue.rating)
-						rating = response.response.venue.rating;
-					else
-						rating = '*';
-				}
-				else{
-					srcImg = 'img/noImg.png';
-					rating = '*';
-				}
-                var newContent = '<div><p>' + address + '</p>' +
-                    '<div class="row"><div class="col-xs-6"><img src="' + srcImg + '" ></div>' +
-                    '<div class="col-xs-6">' +
-                    (typeof phone != 'undefined'?('<p>' + phone + '</p>'):'') +
-                    '<p>rating:<span class="badge">'+rating+'</span></p></div></div></div>';
+        // Make another call to get photo and rating using the id
+        $.getJSON( url, function( response){
+            if(response.response.venue){
+                if(response.response.venue.bestPhoto){
+                    var prefix = response.response.venue.bestPhoto.prefix;
+                    var suffix = response.response.venue.bestPhoto.suffix;
+                    srcImg = prefix + "100x100" + suffix;
+                }
+                else
+                    srcImg = 'img/noImg.png';
+                if(response.response.venue.rating)
+                    rating = response.response.venue.rating;
+                else
+                    rating = '*';
+            }
+            else{
+                srcImg = 'img/noImg.png';
+                rating = '*';
+            }
+            var newContent = '<div><p>' + address + '</p>' +
+                '<div class="row"><div class="col-xs-6"><img src="' + srcImg + '" ></div>' +
+                '<div class="col-xs-6">' +
+                (typeof phone != 'undefined'?('<p>' + phone + '</p>'):'') +
+                '<p>rating:<span class="badge">'+rating+'</span></p></div></div></div>';
 
-                infowindow.setContent(infowindow.getContent() + newContent);
+            infowindow.setContent(infowindow.getContent() + newContent);
 
-                loadWikipedia(title, infowindow);
+            loadWikipedia(title, infowindow);
 
-			}).fail(function(){
-				console.log("Fail to load foursquare details");
-                alert("There was an error. Please refresh the page and try again.");
-			});
-		},
-        error: function(){
-            console.log("Fail to load foursquare id");
+        }).fail(function(){
+            console.log("Fail to load foursquare details");
             alert("There was an error. Please refresh the page and try again.");
-        }
-	});
+        });
+    }).fail(function( xhr, status, errorThrown ){
+        alert("Fail to load foursquare details");
+        console.log("There was an error. Please refresh the page and try again");
+        console.log( "Error: " + errorThrown );
+        console.log( "Status: " + status );
+        console.dir( xhr );
+    });
 }
 
 // Search for articles in wikipedia to populates the infowindow
