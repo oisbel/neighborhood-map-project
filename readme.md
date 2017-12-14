@@ -21,6 +21,7 @@ Foursquare API is used to pull more information on locations. This includes one 
 - Knockout JS Documentation
 - Google Maps API Documentation
 - Udacity The Frontend: JavaScript & AJAX Course
+- http://api.jquery.com
 
 
 License
