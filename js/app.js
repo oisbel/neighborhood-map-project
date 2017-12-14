@@ -160,6 +160,12 @@ function initMap() {
 
 }
 
+// Error callback for Map API request
+function mapError() {
+    console.log("Fail to load the map");
+    alert("Fail to load the map. Check your internet connection and try again.");
+}
+
 // Shows the markers with the visible property set to true
 function showMarkers(markers) {
 	if(!map || !markers){
@@ -184,7 +190,7 @@ function showMarkers(markers) {
 // Populates the infowindow when the marker is clicked
 function populateInfoWindow(marker, infowindow) {
 	//check if the infowindow is already opened on this marker
-	if (infowindow.marker == marker)
+	if (!infowindow || infowindow.marker == marker)
 		return;
 
 	// Animate the marker
