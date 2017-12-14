@@ -368,14 +368,16 @@ var ViewModel = function(){
 	this.filter = function(){
 		self.locationsList().forEach(function(locationItem){
 			// Check if the title contains the text entered
-			if(locationItem.title().toLowerCase().includes(self.filterText().toLowerCase())){
-				locationItem.shown(true);
-				markers[locationItem.id].visible = true;
-			}
-			else{
-				locationItem.shown(false);
-				markers[locationItem.id].visible = false;
-			}
+            if(locationItem && locationItem.title()){
+                if(locationItem.title().toLowerCase().includes(self.filterText().toLowerCase())){
+                    locationItem.shown(true);
+                    markers[locationItem.id].visible = true;
+                }
+                else{
+                    locationItem.shown(false);
+                    markers[locationItem.id].visible = false;
+                }
+            }
 		});
 
 		showMarkers(markers);
