@@ -11,25 +11,25 @@
 <body>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-5 col-sm-4 col-md-3 col-lg-2 locations-view"
+			<aside class="col-xs-5 col-sm-4 col-md-3 col-lg-2 locations-view"
 				data-bind="css: {'locations-view-out' :isHide(), 'locations-view-in' :!isHide()}">
-				<div>
+				<header>
 					<h3 class="header-locations">Favorites Places</h3>
           			<input id="filter-location-text" type="text" placeholder="Enter Location"
           				data-bind="value: filterText, valueUpdate: 'afterkeydown', event: { keyup: filter }" autofocus>
-        		</div>
+        		</header>
 				<ul class="list-group" id="locations" data-bind="foreach: filteredLocations">
 					<li class="list-group-item location-item" data-bind="text: title, click: $parent.highlightLocation"></li>
 				</ul>
-			</div>
-			<div class="col-xs-7 col-sm-8 col-md-9 col-lg-10 map-container" data-bind="css: {'map-container-max': isHide()}">
+			</aside>
+			<main class="col-xs-7 col-sm-8 col-md-9 col-lg-10 map-container" data-bind="css: {'map-container-max': isHide()}">
 				<div class="hamburger-bar">
 					<a data-bind="click: hideshowList, attr:{title: hamburgerText}">
           				<span class="glyphicon glyphicon-align-justify hamburger-link"></span>
         			</a>
 				</div>
-				<div id="map"></div>
-			</div>
+				<section id="map"></section>
+			</main>
 		</div>
 	</div>
 	<script src="js/libs/knockout-3.4.2.js"></script>
