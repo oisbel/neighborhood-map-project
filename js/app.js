@@ -155,6 +155,7 @@ function initMap() {
     	// Open the infowindow when click on the marker
         marker.addListener('click', function(){
         	populateInfoWindow(this, infoWindow);
+            map.panTo(this.getPosition());
         });
     };
 
@@ -209,6 +210,8 @@ function populateInfoWindow(marker, infowindow) {
     });
 
     loadFoursquare_Wikipedia(marker.position, marker.title, infowindow);
+
+    map.panTo(marker.getPosition());
 
     infowindow.open(map, marker);
 }
