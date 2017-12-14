@@ -291,21 +291,19 @@ function loadWikipedia(title, infowindow){
     $.ajax({
         url: 'http://en.wikipedia.org/w/api.php',
         data: {action: 'opensearch', search: title, limit: '4', format: 'json'},
-        dataType: 'jsonp',
-        success: function(response){
-            var articleList = response[1];
-            for (var i = 0; i < articleList.length; i++) {
-                var url = 'https://en.wikipedia.org/wiki/' + articleList[i];
-                newContent += '<li><a target="_blank" href="' + url + '">' +
-                    articleList[i] +'</a></li>';
-            };
-            newContent += '</ul></div></div>';
-            infowindow.setContent(infowindow.getContent() + newContent);
-        },
-        error: function(){
-            console.log("Fail to load wikipedia articles");
-            alert("Fail to load wikipedia articles");
-        }
+        dataType: 'jsonp'
+    }).done(function(response){
+        var articleList = response[1];
+        for (var i = 0; i < articleList.length; i++) {
+            var url = 'https://en.wikipedia.org/wiki/' + articleList[i];
+            newContent += '<li><a target="_blank" href="' + url + '">' +
+            articleList[i] +'</a></li>';
+        };
+        newContent += '</ul></div></div>';
+        infowindow.setContent(infowindow.getContent() + newContent);
+    }).fail(function( xhr, status, errorThrown ){
+        alert("Fail to load wikipedia articles");
+        console.log("Fail to load wikipedia articles");
     });
 }
 
